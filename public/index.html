@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Square">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#007AFF">
+    <meta name="msapplication-TileColor" content="#007AFF">
+    <meta name="msapplication-navbutton-color" content="#007AFF">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-orientations" content="portrait-any">
+    <title>Square - 你的AI虚拟伴侣</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDE4MCAxODAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50IiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj4KPHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzAwN0FGRjtzdG9wLW9wYWNpdHk6MSIgLz4KPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojNTg1NkQ2O3N0b3Atb3BhY2l0eToxIiAvPgo8L2xpbmVhckdyYWRpZW50Pgo8L2RlZnM+CjxyZWN0IHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiByeD0iNDAiIGZpbGw9InVybCgjZ3JhZGllbnQpIi8+Cjx0ZXh0IHg9IjkwIiB5PSIxMDUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSI3MCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPvCfpKY8L3RleHQ+Cjwvc3ZnPg==">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 主容器 -->
+    <div class="app-container">
+        <!-- 顶部导航栏 -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <div class="logo-gradient"></div>
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="title-section">
+                        <a href="https://square-llm.com/" target="_blank" rel="noopener noreferrer" class="title-link">
+                            <h1 class="app-title">Square</h1>
+                            <p class="app-subtitle">AI虚拟伴侣</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <div class="status-indicator">
+                        <div class="status-dot online"></div>
+                        <span class="status-text">在线</span>
+                    </div>
+                    <button class="header-button" onclick="openSettings()" title="设置">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                    <button class="header-button" onclick="toggleTheme()" title="切换主题">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- 聊天容器 -->
+        <main class="chat-container">
+            <!-- 全局背景装饰 - 在整个应用中显示 -->
+            <div class="global-background">
+                <div class="floating-shapes">
+                    <div class="shape shape-1"></div>
+                    <div class="shape shape-2"></div>
+                    <div class="shape shape-3"></div>
+                    <div class="shape shape-4"></div>
+                </div>
+            </div>
+            
+            <!-- 欢迎界面 -->
+            <div class="welcome-screen" id="welcomeScreen">
+                <div class="welcome-content">
+                    <div class="welcome-avatar">
+                        <div class="avatar-rings">
+                            <div class="ring ring-1"></div>
+                            <div class="ring ring-2"></div>
+                            <div class="ring ring-3"></div>
+                        </div>
+                        <div class="avatar-core">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                    </div>
+                    <div class="welcome-text">
+                        <h2 class="welcome-title">你好，我是 <span class="highlight">Square</span></h2>
+                        <p class="welcome-subtitle">你的专属AI伴侣，随时为你提供温暖的陪伴与智能的对话</p>
+                    </div>
+                    <div class="suggestion-chips">
+                        <button class="chip primary" onclick="sendSuggestion('你好，Square！很高兴认识你')">
+                            <div class="chip-icon">
+                                <i class="fas fa-hand-wave"></i>
+                            </div>
+                            <div class="chip-content">
+                                <span class="chip-title">打个招呼</span>
+                                <span class="chip-desc">开始我们的对话</span>
+                            </div>
+                        </button>
+                        <button class="chip" onclick="sendSuggestion('今天感觉有点累，想找人聊聊')">
+                            <div class="chip-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="chip-content">
+                                <span class="chip-title">倾诉心情</span>
+                                <span class="chip-desc">分享你的感受</span>
+                            </div>
+                        </button>
+                        <button class="chip" onclick="sendSuggestion('给我讲个有趣的故事吧')">
+                            <div class="chip-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="chip-content">
+                                <span class="chip-title">听听故事</span>
+                                <span class="chip-desc">享受美好时光</span>
+                            </div>
+                        </button>
+                        <button class="chip" onclick="sendSuggestion('你能帮我解决一些问题吗？')">
+                            <div class="chip-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <div class="chip-content">
+                                <span class="chip-title">寻求帮助</span>
+                                <span class="chip-desc">让我来协助你</span>
+                            </div>
+                        </button>
+                    </div>
+                    
+                    <!-- 官方网站链接 -->
+                    <div class="welcome-footer">
+                        <a href="https://square-llm.com/" target="_blank" rel="noopener noreferrer" class="learn-more-link">
+                            <i class="fas fa-external-link-alt"></i>
+                            <span>了解更多关于Square LLM</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 聊天区域 -->
+            <div class="chat-area" id="chatArea">
+                <div class="messages-container" id="messagesContainer">
+                    <!-- 消息将在这里动态添加 -->
+                </div>
+            </div>
+        </main>
+
+        <!-- 输入区域 -->
+        <footer class="input-section">
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <div class="input-field">
+                        <textarea 
+                            id="messageInput" 
+                            placeholder="与Square分享你的想法..." 
+                            rows="1"
+                            maxlength="1000"
+                        ></textarea>
+                        <div class="input-suggestions" id="inputSuggestions">
+                            <button class="suggestion-item" onclick="applySuggestion('今天天气怎么样？')">
+                                <i class="fas fa-sun"></i>
+                                <span>天气</span>
+                            </button>
+                            <button class="suggestion-item" onclick="applySuggestion('推荐一部好电影')">
+                                <i class="fas fa-film"></i>
+                                <span>电影</span>
+                            </button>
+                            <button class="suggestion-item" onclick="applySuggestion('我感到有些焦虑')">
+                                <i class="fas fa-heart"></i>
+                                <span>情绪</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button class="send-button" id="sendButton" disabled title="发送消息" aria-label="发送消息">
+                        <div class="send-icon">
+                            <i class="fas fa-paper-plane"></i>
+                        </div>
+                        <div class="send-progress" id="sendProgress"></div>
+                    </button>
+                </div>
+                <div class="input-actions">
+                    <div class="left-actions">
+                        <button class="action-button" onclick="clearChat()">
+                            <i class="fas fa-refresh"></i>
+                            <span>重新开始</span>
+                        </button>
+                        <button class="action-button" onclick="exportChatHistory()">
+                            <i class="fas fa-download"></i>
+                            <span>导出记录</span>
+                        </button>
+                    </div>
+                    <div class="right-actions">
+                        <div class="typing-indicator" id="typingIndicator">
+                            <span>Square正在输入</span>
+                            <div class="typing-dots">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="character-count">
+                            <span id="charCount">0</span>/1000
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 设置模态框 -->
+    <div class="settings-modal" id="settingsModal">
+        <div class="settings-backdrop" onclick="closeSettings()"></div>
+        <div class="settings-content">
+            <div class="settings-header">
+                <h2>设置</h2>
+                <button class="close-button" onclick="closeSettings()" title="关闭设置">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="settings-body">
+                <div class="setting-group">
+                    <label class="setting-label">AI模型选择</label>
+                    <div class="model-selector">
+                        <div class="model-option" data-model="gpt-4.1">
+                            <input type="radio" id="gpt41" name="model" value="gpt-4.1" checked>
+                            <label for="gpt41">
+                                <div class="model-info">
+                                    <div class="model-name">GPT-4.1</div>
+                                    <div class="model-desc">最新版本，性能卓越</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="model-option" data-model="o4-mini">
+                            <input type="radio" id="o4mini" name="model" value="o4-mini">
+                            <label for="o4mini">
+                                <div class="model-info">
+                                    <div class="model-name">o4-mini</div>
+                                    <div class="model-desc">快速响应，日常对话首选</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="model-option" data-model="gpt-4.1-mini">
+                            <input type="radio" id="gpt41mini" name="model" value="gpt-4.1-mini">
+                            <label for="gpt41mini">
+                                <div class="model-info">
+                                    <div class="model-name">GPT-4.1 Mini</div>
+                                    <div class="model-desc">均衡性能，高效实用</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="setting-group">
+                    <label class="setting-label" for="personalityInput">自定义个性设定</label>
+                    <textarea id="personalityInput" class="setting-textarea" rows="4" placeholder="如：你是一个温暖幽默的AI工程师，善于用代码和关怀陪伴用户……"></textarea>
+                    <div class="setting-desc">可为空，留空则使用默认“方块”风格</div>
+                </div>
+            </div>
+            <div class="settings-footer">
+                <button class="settings-button secondary" onclick="closeSettings()">取消</button>
+                <button class="settings-button primary" onclick="saveSettings()">保存设置</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
