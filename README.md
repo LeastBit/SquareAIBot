@@ -82,7 +82,7 @@ FangKuaiBot/
 
 ## 配置说明
 
-- 默认已集成 Square LLM API（如需更换 API Key 或模型，请修改 `server.js` 中的配置）。
+- - 请前往 `server.js` 设置配置Square LLM API 配置 API Key 相关链接：https://linux.do/t/topic/755384。
 - 支持 .env 环境变量配置（可选）。
 
 ## 依赖
